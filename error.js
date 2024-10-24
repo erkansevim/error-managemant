@@ -11,7 +11,9 @@ app.get('/user/:id', (req, res) => {
     const { id } = req.params;  
 
     if(isNaN(id)) {
-       throw new Error('Id must be a number')
+        
+       throw new Error('Id must be a number', {
+            cause: 'Id is not a number'})
     }else {
 
     res.send({
@@ -25,9 +27,12 @@ app.get('/user/:id', (req, res) => {
 
 
 const errorHandler = (error, req, res, next) => {
-    res.send({
+const statusCode =res?.errorStatusCode ??500;
+
+    res.status(statusCode).send({
         error: true,
-        message: "burada hata oluştu",
+        message: error.message,
+        cause: error.cause
     })
 }
 app.use(errorHandler);
