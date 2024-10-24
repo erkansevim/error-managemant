@@ -23,6 +23,27 @@ app.get('/user/:id', (req, res) => {
 });
 
 
+
+const errorHandler = (error, req, res, next) => {
+    res.send({
+        error: true,
+        message: "burada hata oluştu",
+    })
+}
+app.use(errorHandler);
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.listen(PORT, () => {
     console.log(`Listening on port 127.0.0.1:${PORT}`);
 
